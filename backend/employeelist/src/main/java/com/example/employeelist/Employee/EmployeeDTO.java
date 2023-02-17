@@ -1,7 +1,8 @@
-package Employee;
+package com.example.employeelist.Employee;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 public class EmployeeDTO {
@@ -33,17 +34,19 @@ public class EmployeeDTO {
 
 	@NotBlank
 	private String endDate;
+	
+	private boolean ongoing;
 
 	@NotBlank
 	private String timeBasis;
 
-	@NotBlank
+	@NotNull
 	private float weeklyHours;
 
+
 	public EmployeeDTO(String firstName, String middleName, String lastName, String email, String mobileNumber,
-			String resAddress, String contractType, String startDate, String endDate, String timeBasis,
+			String resAddress, String contractType, String startDate, String endDate, boolean ongoing, String timeBasis,
 			float weeklyHours) {
-		super();
 		this.firstName = firstName;
 		this.middleName = middleName;
 		this.lastName = lastName;
@@ -53,6 +56,7 @@ public class EmployeeDTO {
 		this.contractType = contractType;
 		this.startDate = startDate;
 		this.endDate = endDate;
+		this.ongoing = ongoing;
 		this.timeBasis = timeBasis;
 		this.weeklyHours = weeklyHours;
 	}
@@ -124,6 +128,14 @@ public class EmployeeDTO {
 
 	public String getEndDate() {
 		return endDate;
+	}
+	
+	public boolean getOngoing() {
+		return ongoing;
+	}
+
+	public void setOngoing(boolean ongoing) {
+		this.ongoing = ongoing;
 	}
 
 	public void setEndDate(String endDate) {

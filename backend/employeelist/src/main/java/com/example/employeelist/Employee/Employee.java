@@ -1,4 +1,4 @@
-package Employee;
+package com.example.employeelist.Employee;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -57,7 +57,6 @@ public class Employee {
 	public Employee(String firstName, String middleName, String lastName, String email, String mobileNumber,
 			String resAddress, String contractType, String startDate, String endDate, boolean ongoing, String timeBasis,
 			float weeklyHours) {
-		super();
 		this.firstName = firstName;
 		this.middleName = middleName;
 		this.lastName = lastName;
