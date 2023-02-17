@@ -1,61 +1,47 @@
 package Employee;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
-@Entity
-public class Employee {
+public class EmployeeDTO {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Long id;
-
-	@Column
+	@NotBlank
 	private String firstName;
 
-	@Column
 	private String middleName;
 
-	@Column
+	@NotBlank
 	private String lastName;
 
-	@Column
+	@NotBlank
+	@Email
 	private String email;
 
-	@Column
+	@NotBlank
+	@Size(min = 10, max = 10)
 	private String mobileNumber;
 
-	@Column
+	@NotBlank
 	private String resAddress;
 
-	@Column
+	@NotBlank
 	private String contractType;
 
-	@Column
+	@NotBlank
 	private String startDate;
 
-	@Column
+	@NotBlank
 	private String endDate;
 
-	@Column
-	boolean ongoing;
-
-	@Column
+	@NotBlank
 	private String timeBasis;
 
-	@Column
+	@NotBlank
 	private float weeklyHours;
 
-	// Empty Constructor to mitigate Spring's Default constructor not found error
-	public Employee() {
-	}
-
-	// Constructor
-	public Employee(String firstName, String middleName, String lastName, String email, String mobileNumber,
-			String resAddress, String contractType, String startDate, String endDate, boolean ongoing, String timeBasis,
+	public EmployeeDTO(String firstName, String middleName, String lastName, String email, String mobileNumber,
+			String resAddress, String contractType, String startDate, String endDate, String timeBasis,
 			float weeklyHours) {
 		super();
 		this.firstName = firstName;
@@ -67,20 +53,11 @@ public class Employee {
 		this.contractType = contractType;
 		this.startDate = startDate;
 		this.endDate = endDate;
-		this.ongoing = ongoing;
 		this.timeBasis = timeBasis;
 		this.weeklyHours = weeklyHours;
 	}
 
-	// Getters and setters to access private fields for additional security - (Encapsulation)
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
+	// Getters and Setters.
 	public String getFirstName() {
 		return firstName;
 	}
@@ -153,14 +130,6 @@ public class Employee {
 		this.endDate = endDate;
 	}
 
-	public boolean isOngoing() {
-		return ongoing;
-	}
-
-	public void setOngoing(boolean ongoing) {
-		this.ongoing = ongoing;
-	}
-
 	public String getTimeBasis() {
 		return timeBasis;
 	}
@@ -176,4 +145,5 @@ public class Employee {
 	public void setWeeklyHours(float weeklyHours) {
 		this.weeklyHours = weeklyHours;
 	}
+
 }
