@@ -34,7 +34,7 @@ public class EmployeeDTO {
 
 	@NotBlank
 	private String endDate;
-	
+
 	private boolean ongoing;
 
 	@NotBlank
@@ -42,7 +42,6 @@ public class EmployeeDTO {
 
 	@NotNull
 	private float weeklyHours;
-
 
 	public EmployeeDTO(String firstName, String middleName, String lastName, String email, String mobileNumber,
 			String resAddress, String contractType, String startDate, String endDate, boolean ongoing, String timeBasis,
@@ -129,7 +128,7 @@ public class EmployeeDTO {
 	public String getEndDate() {
 		return endDate;
 	}
-	
+
 	public boolean getOngoing() {
 		return ongoing;
 	}
