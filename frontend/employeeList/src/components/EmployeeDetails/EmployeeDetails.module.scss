@@ -3,7 +3,7 @@
 .EmployeeDetails {
   &_Header {
     display: flex;
-    align-items: center;
+    flex-direction: column;
     height: 140px;
     width: 100%;
     background-color: $grey-light;

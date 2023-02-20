@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import Styles from "./EmployeeDetails.module.scss";
 
@@ -32,12 +32,12 @@ const EmployeeDetails = () => {
     mobileNumber: string;
     resAddress: string;
     contractType: string;
-    startDay: number;
+    startDay: any;
     startMonth: string;
-    startYear: number;
-    endDay: number;
+    startYear: any;
+    endDay: any;
     endMonth: string;
-    endYear: number;
+    endYear: any;
     ongoing: boolean;
     timeBasis: string;
     weeklyHours: number;
@@ -59,13 +59,67 @@ const EmployeeDetails = () => {
   });
   const [formData, setFormData] = useState({});
 
+  const [defaultValues, setDefaultValues] = useState<rawFormData>({
+    id: 0,
+    firstName: "",
+    middleName: "",
+    lastName: "",
+    email: "",
+    mobileNumber: "",
+    resAddress: "",
+    contractType: "",
+    startYear: "",
+    startMonth: "",
+    startDay: "",
+    endYear: "",
+    endMonth: "",
+    endDay: "",
+    ongoing: false,
+    timeBasis: "",
+    weeklyHours: 0,
+  });
+
+  const [dates, setDates] = useState({
+    startYear: "",
+    startMonth: "",
+    startDay: "",
+    endYear: "",
+    endMonth: "",
+    endDay: "",
+  });
+
   useEffect(() => {
     const getUserDetails = async () => {
       const res = await axios.get(`http://localhost:8080/employee/${id}`);
       setUserData(res.data);
+
+      setDefaultValues({
+        id: res.data.id,
+        firstName: res.data.firstName,
+        middleName: res.data.middleName,
+        lastName: res.data.lastName,
+        email: res.data.email,
+        mobileNumber: res.data.mobileNumber,
+        resAddress: res.data.resAddress,
+        contractType: res.data.contractType,
+        startYear: res.data.startDate.split("-")[0],
+        startMonth: res.data.startDate.split("-")[1],
+        startDay: res.data.startDate.split("-")[2],
+        endYear: res.data.endDate.split("-")[0],
+        endMonth: res.data.endDate.split("-")[1],
+        endDay: res.data.endDate.split("-")[2],
+        ongoing: res.data.ongoing,
+        timeBasis: res.data.timeBasis,
+        weeklyHours: res.data.weeklyHours,
+      });
       reset(res.data);
     };
+    reset(defaultValues);
+
     getUserDetails();
+    console.log("def", defaultValues);
+
+    console.log(defaultValues, "sw");
   }, [id]);
 
   const handleChange = (event: { target: { name: any; value: any } }) => {
@@ -74,29 +128,19 @@ const EmployeeDetails = () => {
       ...formData,
       [event.target.name]: event.target.value,
     });
-    console.log(formData);
   };
+
   console.log("userData", userData);
 
   const {
     register,
     handleSubmit,
     reset,
+    control,
     formState: { errors },
   } = useForm<rawFormData>({
     mode: "onChange",
-    defaultValues: {
-      firstName: userData.firstName,
-      middleName: userData.middleName,
-      lastName: userData.lastName,
-      email: userData.email,
-      mobileNumber: userData.mobileNumber,
-      resAddress: userData.resAddress,
-      contractType: userData.contractType,
-      ongoing: userData.ongoing,
-      timeBasis: userData.timeBasis,
-      weeklyHours: userData.weeklyHours,
-    },
+    defaultValues,
   });
 
   const onSubmit: SubmitHandler<any> = async (data) => {
@@ -121,12 +165,18 @@ const EmployeeDetails = () => {
         console.log(res.data, "submitted data");
         navigate("/");
       });
+
+    console.log(data, "2323bwebfweifbwfbwh");
+    console.log(formattedForm, "swsw");
   };
 
   return (
     <div className={Styles.EmployeeDetails}>
       <div className={Styles.EmployeeDetails_Header}>
-        <h3 className={Styles.EmployeeDetails_Header_Text}>Employees' List</h3>
+        <small>{<Link to="/"> {`<`}Back</Link>}</small>
+        <h3 className={Styles.EmployeeDetails_Header_Text}>
+          Employees Details
+        </h3>
       </div>{" "}
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className={Styles.EmployeeDetails_Form}>
@@ -244,29 +294,39 @@ const EmployeeDetails = () => {
                 type="number"
                 min="1"
                 max="31"
+                defaultValue={userData.startDate.split("-")[2]}
                 placeholder="DD"
                 {...register("startDay", { required: true, min: 1, max: 31 })}
                 onChange={handleChange}
               />
-              <select
-                id="startMonth"
-                {...register("startMonth", { required: true })}
-                onChange={handleChange}
-              >
-                <option value="">Month</option>
-                <option value="01">January</option>
-                <option value="02">February</option>
-                <option value="03">March</option>
-                <option value="04">April</option>
-                <option value="05">May</option>
-                <option value="06">June</option>
-                <option value="07">July</option>
-                <option value="08">August</option>
-                <option value="09">September</option>
-                <option value="10">October</option>
-                <option value="11">November</option>
-                <option value="12">December</option>
-              </select>
+
+              <Controller
+                control={control}
+                name="startMonth"
+                render={({ field: { onChange, onBlur, value, ref } }) => (
+                  <select
+                    defaultValue={dates.startMonth}
+                    id="startMonth"
+                    {...register("startMonth", { required: true })}
+                    onChange={handleChange}
+                  >
+                    <option value="">Month</option>
+                    <option value="01">January</option>
+                    <option value="02">February</option>
+                    <option value="03">March</option>
+                    <option value="04">April</option>
+                    <option value="05">May</option>
+                    <option value="06">June</option>
+                    <option value="07">July</option>
+                    <option value="08">August</option>
+                    <option value="09">September</option>
+                    <option value="10">October</option>
+                    <option value="11">November</option>
+                    <option value="12">December</option>
+                  </select>
+                )}
+              />
+
               <input
                 id="startYear"
                 type="number"
@@ -331,11 +391,11 @@ const EmployeeDetails = () => {
               />
             </div>
           </div>
-          {/* {errors.endDay && <p>End Day is required</p>}
+          {errors.endDay && <p>End Day is required</p>}
           {errors.endMonth && <p>End Month is required</p>}
           {errors.endYear && (
             <p>End Year is required and must be between 2000 and 2050</p>
-          )} */}
+          )}
           <div className={Styles.EmployeeDetails_Form__Input__check}>
             <input
               id="ongoing"

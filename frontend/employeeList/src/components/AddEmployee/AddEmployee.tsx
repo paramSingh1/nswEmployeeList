@@ -88,17 +88,6 @@ const AddEmployee = ({ userData }: any) => {
     });
   };
 
-  const handleUpdate = async () => {
-    console.log(formData, "what i need to fix");
-    await axios
-      .put(`http://localhost:8080/employee/${formData.id}`, formData)
-      .then((res) => {
-        console.log(res.data);
-        console.log("updated", userData.id);
-        navigate("/");
-      });
-  };
-
   return (
     <div className={Styles.AddEmployee}>
       <div className={Styles.AddEmployee_Header}>
