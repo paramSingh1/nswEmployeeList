@@ -2,15 +2,28 @@
 
 .AddEmployee {
   // padding: 20px 50px;
+  &_Wrapper {
+    width: 30%;
+  }
   &_Header {
     display: flex;
-    align-items: center;
+    flex-direction: column;
     height: 140px;
     width: 100%;
     background-color: $grey-light;
     &_Text {
       margin-left: 80px;
       font-size: 1.5rem;
+      @media only screen and (max-width: 767px) {
+        margin-left: 10px;
+      }
+    }
+    &__Back {
+      margin-left: 80px;
+      margin-top: 10px;
+      @media only screen and (max-width: 767px) {
+        margin-left: 10px;
+      }
     }
   }
   &_Form {
@@ -33,6 +46,14 @@
         padding: 5px;
         margin-bottom: 20px;
       }
+      &__Address {
+        border-radius: 5px;
+        height: 20px;
+        width: 250px;
+        font-size: 16px;
+        padding: 5px;
+        margin-bottom: 20px;
+      }
       &__check {
         flex-direction: column;
         padding: 5px;
@@ -47,8 +68,14 @@
       }
       &__Month {
         border-radius: 5px;
-        height: 40px;
+        height: 35px;
         width: 100px;
+        padding: 5px;
+      }
+      &__Year {
+        border-radius: 5px;
+        width: 60px;
+        padding: 5px;
       }
       &__Date {
         display: flex;
@@ -57,10 +84,43 @@
       &__Date > * {
         margin: 5px;
       }
+      &__Hours {
+        border-radius: 5px;
+        width: 40px;
+        padding: 5px;
+      }
     }
-    &_Btns {
+    &__Btns {
       display: flex;
       flex-direction: row;
+      &__Blue {
+        margin: 0 5px;
+        height: 30px;
+        width: 120px;
+        background-color: $blue;
+        color: white;
+        border-radius: 5px;
+        border-color: none;
+      }
+      &__Grey {
+        height: 30px;
+        width: 120px;
+        background-color: $grey-light;
+        color: black;
+        border-color: $grey-med;
+        border-radius: 5px;
+      }
     }
+  }
+  &_Error {
+    font-size: 10px;
+    border: 1px solid rgb(255, 69, 0);
+    width: 25%;
+    border-radius: 5px;
+    padding: 2px;
+    background-color: #cc0000;
+    text-align: center;
+    margin-bottom: 2px;
+    color: white;
   }
 }

@@ -168,7 +168,9 @@ const EmployeeDetails = () => {
   return (
     <div className={Styles.EmployeeDetails}>
       <div className={Styles.EmployeeDetails_Header}>
-        <small>{<Link to="/"> {`<`}Back</Link>}</small>
+        <small className={Styles.EmployeeDetails_Header__Back}>
+          {<Link to="/"> {`< `}Back</Link>}
+        </small>
         <h3 className={Styles.EmployeeDetails_Header_Text}>
           Employees Details
         </h3>
@@ -185,7 +187,11 @@ const EmployeeDetails = () => {
               onChange={handleChange}
             />
           </div>
-          {errors.firstName && <span>*First Name is required</span>}
+          {errors.firstName && (
+            <span className={Styles.EmployeeDetails_Error}>
+              *First Name is required
+            </span>
+          )}
 
           <label htmlFor="middleName">Middle Name (if applicable)</label>
           <div className={Styles.EmployeeDetails_Form__Input}>
@@ -204,7 +210,11 @@ const EmployeeDetails = () => {
               onChange={handleChange}
             />
           </div>
-          {errors.lastName && <p>Last Name is required</p>}
+          {errors.lastName && (
+            <span className={Styles.EmployeeDetails_Error}>
+              Last Name is required
+            </span>
+          )}
 
           <h3>Contact details</h3>
 
@@ -222,7 +232,9 @@ const EmployeeDetails = () => {
               onChange={handleChange}
             />
             {errors.email?.message && (
-              <p>{errors.email.message && `email is required`}</p>
+              <span className={Styles.EmployeeDetails_Error}>
+                {errors.email.message && `email is required`}
+              </span>
             )}
           </div>
 
@@ -240,7 +252,11 @@ const EmployeeDetails = () => {
               })}
               onChange={handleChange}
             />
-            {errors.mobileNumber && <p>{errors.mobileNumber.message}</p>}
+            {errors.mobileNumber && (
+              <span className={Styles.EmployeeDetails_Error}>
+                {errors.mobileNumber.message}
+              </span>
+            )}
           </div>
 
           <label htmlFor="resAddress">Residential Address</label>
@@ -251,7 +267,11 @@ const EmployeeDetails = () => {
               onChange={handleChange}
             />
           </div>
-          {errors.resAddress && <p>Residential Address is required</p>}
+          {errors.resAddress && (
+            <span className={Styles.EmployeeDetails_Error}>
+              Residential Address is required
+            </span>
+          )}
 
           <h3>Employee Status</h3>
 
@@ -278,7 +298,11 @@ const EmployeeDetails = () => {
               <label htmlFor="contractType">Contract</label>
             </div>
           </div>
-          {errors.contractType && <p>Contract Type is required</p>}
+          {errors.contractType && (
+            <span className={Styles.EmployeeDetails_Error}>
+              Contract Type is required
+            </span>
+          )}
 
           <label htmlFor="startDate">Start Date</label>
 
@@ -335,10 +359,20 @@ const EmployeeDetails = () => {
               />
             </div>
           </div>
-          {errors.startDay && <p>Start Day is required</p>}
-          {errors.startMonth && <p>Start Month is required</p>}
+          {errors.startDay && (
+            <span className={Styles.EmployeeDetails_Error}>
+              Start Day is required
+            </span>
+          )}
+          {errors.startMonth && (
+            <span className={Styles.EmployeeDetails_Error}>
+              Start Month is required
+            </span>
+          )}
           {errors.startYear && (
-            <p>Start Year is required and must be between 2000 and 2050</p>
+            <span className={Styles.EmployeeDetails_Error}>
+              Start Year is required and must be between 2000 and 2050
+            </span>
           )}
 
           <label htmlFor="endDate">End Date</label>
@@ -386,10 +420,20 @@ const EmployeeDetails = () => {
               />
             </div>
           </div>
-          {errors.endDay && <p>End Day is required</p>}
-          {errors.endMonth && <p>End Month is required</p>}
+          {errors.endDay && (
+            <span className={Styles.EmployeeDetails_Error}>
+              End Day is required
+            </span>
+          )}
+          {errors.endMonth && (
+            <span className={Styles.EmployeeDetails_Error}>
+              End Month is required
+            </span>
+          )}
           {errors.endYear && (
-            <p>End Year is required and must be between 2000 and 2050</p>
+            <span className={Styles.EmployeeDetails_Error}>
+              End Year is required and must be between 2000 and 2050
+            </span>
           )}
           <div className={Styles.EmployeeDetails_Form__Input__check}>
             <input
@@ -424,7 +468,11 @@ const EmployeeDetails = () => {
               />
               <label htmlFor="timeBasis">Part-time</label>
             </div>
-            {errors.timeBasis && <p>Time Basis is required</p>}
+            {errors.timeBasis && (
+              <span className={Styles.EmployeeDetails_Error}>
+                Time Basis is required
+              </span>
+            )}
           </div>
 
           <label htmlFor="weeklyHours">Weekly Hours</label>
@@ -436,16 +484,22 @@ const EmployeeDetails = () => {
               onChange={handleChange}
             />
           </div>
-          {errors.weeklyHours && <p>Weekly Hours is required</p>}
+          {errors.weeklyHours && (
+            <span className={Styles.EmployeeDetails_Error}>
+              Weekly Hours is required
+            </span>
+          )}
 
           <div className={Styles.EmployeeDetails_Form__Btns}>
-            {userData ? (
-              <input type="submit" value="Update Employee" />
-            ) : (
-              <input type="submit" value="Save" />
-            )}
+            <input
+              className={Styles.EmployeeDetails_Form__Btns__Blue}
+              type="submit"
+              value="Save"
+            />
             <Link to="/">
-              <button>Cancel</button>
+              <button className={Styles.EmployeeDetails_Form__Btns__Grey}>
+                Cancel
+              </button>
             </Link>
           </div>
         </div>

@@ -4,10 +4,12 @@
 
 ![Landing Page](./assets/landing.png)
 
+![Landing Page Mobile](./assets/mobile.png)
+
 # Required Software/Tech
 
 1. MySQLWorkbench
-2. Eclipse or other preferd program with ability to import Maven projects
+2. Eclipse or other preferred program with ability to import Maven projects
 3. Browser (Chrome or any V8 engine is preferred)
 4. Node (Version 19+)
 5. NPM
@@ -62,7 +64,9 @@ To Run the Application a few Prerequisites are required.
 - It should be noted that you will need to add the below configuration into your `application.properties` and ensure your database is set up.
 
 - In order for the creation, deletion, update and reading of data from the database, MySQL workbench is required.
-  > 1.  MySQL Workbench with a connection under the name `employeeList`
+
+- MySQL Workbench with a connection under the name `employeeList`
+
 - Once the above connection has been started you may need to configure your Spring `application.properties` to contain the following :
 
 ```java
