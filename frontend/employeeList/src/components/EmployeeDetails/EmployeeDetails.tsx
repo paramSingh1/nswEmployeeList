@@ -1,13 +1,15 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
-import Styles from "./AddEmployee.module.scss";
+import { useNavigate, useParams, Link } from "react-router-dom";
+import Styles from "./EmployeeDetails.module.scss";
 
-const AddEmployee = ({ userData }: any) => {
+const EmployeeDetails = () => {
+  const { id } = useParams();
   const navigate = useNavigate();
 
   interface Employee {
+    id: number;
     firstName: string;
     middleName: string;
     lastName: string;
@@ -21,16 +23,8 @@ const AddEmployee = ({ userData }: any) => {
     timeBasis: string;
     weeklyHours: number;
   }
-
-  const [formData, setFormData] = useState<any>({});
-
-  useEffect(() => {
-    userData && setFormData(userData);
-  }, [userData]);
-
-  console.log(formData, "fd");
-
   interface rawFormData {
+    id: number;
     firstName: string;
     middleName: string;
     lastName: string;
@@ -48,14 +42,31 @@ const AddEmployee = ({ userData }: any) => {
     timeBasis: string;
     weeklyHours: number;
   }
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<rawFormData>({
-    mode: "all",
+  const [userData, setUserData] = useState<Employee>({
+    id: 0,
+    firstName: "",
+    middleName: "",
+    lastName: "",
+    email: "",
+    mobileNumber: "",
+    resAddress: "",
+    contractType: "",
+    startDate: "",
+    endDate: "",
+    ongoing: false,
+    timeBasis: "",
+    weeklyHours: 0,
   });
+  const [formData, setFormData] = useState({});
+
+  useEffect(() => {
+    const getUserDetails = async () => {
+      const res = await axios.get(`http://localhost:8080/employee/${id}`);
+      setUserData(res.data);
+      reset(res.data);
+    };
+    getUserDetails();
+  }, [id]);
 
   const handleChange = (event: { target: { name: any; value: any } }) => {
     console.log(event.target.name, event.target.value);
@@ -65,9 +76,32 @@ const AddEmployee = ({ userData }: any) => {
     });
     console.log(formData);
   };
+  console.log("userData", userData);
 
-  const onSubmit: SubmitHandler<rawFormData> = (data) => {
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<rawFormData>({
+    mode: "onChange",
+    defaultValues: {
+      firstName: userData.firstName,
+      middleName: userData.middleName,
+      lastName: userData.lastName,
+      email: userData.email,
+      mobileNumber: userData.mobileNumber,
+      resAddress: userData.resAddress,
+      contractType: userData.contractType,
+      ongoing: userData.ongoing,
+      timeBasis: userData.timeBasis,
+      weeklyHours: userData.weeklyHours,
+    },
+  });
+
+  const onSubmit: SubmitHandler<any> = async (data) => {
     const formattedForm: Employee = {
+      id: data.id,
       firstName: data.firstName,
       middleName: data.middleName,
       lastName: data.lastName,
@@ -81,35 +115,25 @@ const AddEmployee = ({ userData }: any) => {
       timeBasis: data.timeBasis,
       weeklyHours: data.weeklyHours,
     };
-
-    axios.post("http://localhost:8080/employee", formattedForm).then((res) => {
-      console.log(res.data);
-      navigate("/");
-    });
-  };
-
-  const handleUpdate = async () => {
-    console.log(formData, "what i need to fix");
     await axios
-      .put(`http://localhost:8080/employee/${formData.id}`, formData)
+      .put(`http://localhost:8080/employee/${data.id}`, formattedForm)
       .then((res) => {
-        console.log(res.data);
-        console.log("updated", userData.id);
+        console.log(res.data, "submitted data");
         navigate("/");
       });
   };
 
   return (
-    <div className={Styles.AddEmployee}>
-      <div className={Styles.AddEmployee_Header}>
-        <h3 className={Styles.AddEmployee_Header_Text}>Employees' List</h3>
+    <div className={Styles.EmployeeDetails}>
+      <div className={Styles.EmployeeDetails_Header}>
+        <h3 className={Styles.EmployeeDetails_Header_Text}>Employees' List</h3>
       </div>{" "}
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className={Styles.AddEmployee_Form}>
+        <div className={Styles.EmployeeDetails_Form}>
           <h3>Personal Information</h3>
 
           <label htmlFor="firstName">First Name</label>
-          <div className={Styles.AddEmployee_Form__Input}>
+          <div className={Styles.EmployeeDetails_Form__Input}>
             <input
               id="firstName"
               {...register("firstName", { required: true })}
@@ -119,7 +143,7 @@ const AddEmployee = ({ userData }: any) => {
           {errors.firstName && <span>*First Name is required</span>}
 
           <label htmlFor="middleName">Middle Name (if applicable)</label>
-          <div className={Styles.AddEmployee_Form__Input}>
+          <div className={Styles.EmployeeDetails_Form__Input}>
             <input
               id="middleName"
               {...register("middleName", { required: false })}
@@ -128,7 +152,7 @@ const AddEmployee = ({ userData }: any) => {
           </div>
 
           <label htmlFor="lastName">Last Name</label>
-          <div className={Styles.AddEmployee_Form__Input}>
+          <div className={Styles.EmployeeDetails_Form__Input}>
             <input
               id="lastName"
               {...register("lastName", { required: true })}
@@ -140,7 +164,7 @@ const AddEmployee = ({ userData }: any) => {
           <h3>Contact details</h3>
 
           <label htmlFor="email">Email</label>
-          <div className={Styles.AddEmployee_Form__Input}>
+          <div className={Styles.EmployeeDetails_Form__Input}>
             <input
               id="email"
               {...register("email", {
@@ -158,7 +182,7 @@ const AddEmployee = ({ userData }: any) => {
           </div>
 
           <label htmlFor="mobileNumber">Mobile Number</label>
-          <div className={Styles.AddEmployee_Form__Input}>
+          <div className={Styles.EmployeeDetails_Form__Input}>
             <input
               id="mobileNumber"
               {...register("mobileNumber", {
@@ -175,7 +199,7 @@ const AddEmployee = ({ userData }: any) => {
           </div>
 
           <label htmlFor="resAddress">Residential Address</label>
-          <div className={Styles.AddEmployee_Form__Input}>
+          <div className={Styles.EmployeeDetails_Form__Input}>
             <input
               id="resAddress"
               {...register("resAddress", { required: true })}
@@ -187,12 +211,11 @@ const AddEmployee = ({ userData }: any) => {
           <h3>Employee Status</h3>
 
           <label htmlFor="contractType">Contract Type</label>
-          <div className={Styles.AddEmployee_Form__Input__check}>
+          <div className={Styles.EmployeeDetails_Form__Input__check}>
             <div>
               <input
                 id="contractType"
                 type="radio"
-                checked={formData && formData.contractType == "Permanent"}
                 value="Permanent"
                 {...register("contractType", { required: true })}
                 onChange={handleChange}
@@ -203,7 +226,6 @@ const AddEmployee = ({ userData }: any) => {
               <input
                 id="contractType"
                 type="radio"
-                checked={formData && formData.contractType == "Contract"}
                 value="Contract"
                 {...register("contractType", { required: true })}
                 onChange={handleChange}
@@ -215,8 +237,8 @@ const AddEmployee = ({ userData }: any) => {
 
           <label htmlFor="startDate">Start Date</label>
 
-          <div className={Styles.AddEmployee_Form__Input}>
-            <div className={Styles.AddEmployee_Form__Input__Date}>
+          <div className={Styles.EmployeeDetails_Form__Input}>
+            <div className={Styles.EmployeeDetails_Form__Input__Date}>
               <input
                 id="startDay"
                 type="number"
@@ -266,8 +288,8 @@ const AddEmployee = ({ userData }: any) => {
 
           <label htmlFor="endDate">End Date</label>
 
-          <div className={Styles.AddEmployee_Form__Input}>
-            <div className={Styles.AddEmployee_Form__Input__Date}>
+          <div className={Styles.EmployeeDetails_Form__Input}>
+            <div className={Styles.EmployeeDetails_Form__Input__Date}>
               <input
                 id="endDay"
                 type="number"
@@ -309,25 +331,24 @@ const AddEmployee = ({ userData }: any) => {
               />
             </div>
           </div>
-          {errors.endDay && <p>End Day is required</p>}
+          {/* {errors.endDay && <p>End Day is required</p>}
           {errors.endMonth && <p>End Month is required</p>}
           {errors.endYear && (
             <p>End Year is required and must be between 2000 and 2050</p>
-          )}
-          <div className={Styles.AddEmployee_Form__Input__check}>
+          )} */}
+          <div className={Styles.EmployeeDetails_Form__Input__check}>
             <input
               id="ongoing"
               type="checkbox"
-              defaultChecked={formData && formData.ongoing == true}
               {...register("ongoing")}
               onChange={handleChange}
             />
             <label htmlFor="ongoing">Ongoing</label>
           </div>
 
-          <div className={Styles.AddEmployee_Form__Input__check}>
+          <div className={Styles.EmployeeDetails_Form__Input__check}>
             <label htmlFor="timeBasis">Time Basis</label>
-            <div className={Styles.AddEmployee_Form__Input}>
+            <div className={Styles.EmployeeDetails_Form__Input}>
               <input
                 id="timeBasis"
                 type="radio"
@@ -338,7 +359,7 @@ const AddEmployee = ({ userData }: any) => {
               <label htmlFor="timeBasis">Full-time</label>
             </div>
 
-            <div className={Styles.AddEmployee_Form__Input}>
+            <div className={Styles.EmployeeDetails_Form__Input}>
               <input
                 id="timeBasis"
                 type="radio"
@@ -352,7 +373,7 @@ const AddEmployee = ({ userData }: any) => {
           </div>
 
           <label htmlFor="weeklyHours">Weekly Hours</label>
-          <div className={Styles.AddEmployee_Form__Input}>
+          <div className={Styles.EmployeeDetails_Form__Input}>
             <input
               id="weeklyHours"
               type="number"
@@ -362,8 +383,12 @@ const AddEmployee = ({ userData }: any) => {
           </div>
           {errors.weeklyHours && <p>Weekly Hours is required</p>}
 
-          <div className={Styles.AddEmployee_Form__Btns}>
-            <input type="submit" value="Save" />
+          <div className={Styles.EmployeeDetails_Form__Btns}>
+            {userData ? (
+              <input type="submit" value="Update Employee" />
+            ) : (
+              <input type="submit" value="Save" />
+            )}
             <Link to="/">
               <button>Cancel</button>
             </Link>
@@ -374,4 +399,4 @@ const AddEmployee = ({ userData }: any) => {
   );
 };
 
-export default AddEmployee;
+export default EmployeeDetails;

@@ -1,0 +1,26 @@
+@import "../../scss/partials";
+.EmployeeCard {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border-bottom: 2px solid $grey-med;
+  &_Name {
+    color: black;
+    font-weight: bold;
+  }
+
+  &_Btns {
+    padding: 25px 10px;
+    color: $blue;
+    &:hover {
+      cursor: pointer;
+    }
+    a {
+      padding: 25px 10px;
+      color: $blue;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+}

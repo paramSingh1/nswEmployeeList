@@ -53,7 +53,7 @@ public class EmployeeService {
 		Optional<Employee> maybeEmployee = this.getById(id);
 		
 		if(maybeEmployee.isEmpty()) {
-			throw new EntityNotFoundException("No Employee found with the id of : " + id);
+			return this.addEmployee(data);
 		}
 		Employee foundEmployee = maybeEmployee.get();
 		
