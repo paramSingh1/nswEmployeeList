@@ -79,48 +79,45 @@ const EmployeeDetails = () => {
     weeklyHours: 0,
   });
 
-  const [dates, setDates] = useState({
-    startYear: "",
-    startMonth: "",
-    startDay: "",
-    endYear: "",
-    endMonth: "",
-    endDay: "",
-  });
-
   useEffect(() => {
     const getUserDetails = async () => {
-      const res = await axios.get(`http://localhost:8080/employee/${id}`);
-      setUserData(res.data);
-
-      setDefaultValues({
-        id: res.data.id,
-        firstName: res.data.firstName,
-        middleName: res.data.middleName,
-        lastName: res.data.lastName,
-        email: res.data.email,
-        mobileNumber: res.data.mobileNumber,
-        resAddress: res.data.resAddress,
-        contractType: res.data.contractType,
-        startYear: res.data.startDate.split("-")[0],
-        startMonth: res.data.startDate.split("-")[1],
-        startDay: res.data.startDate.split("-")[2],
-        endYear: res.data.endDate.split("-")[0],
-        endMonth: res.data.endDate.split("-")[1],
-        endDay: res.data.endDate.split("-")[2],
-        ongoing: res.data.ongoing,
-        timeBasis: res.data.timeBasis,
-        weeklyHours: res.data.weeklyHours,
-      });
-      reset(res.data);
+      try {
+        const res = await axios.get(`http://localhost:8080/employee/${id}`);
+        setUserData(res.data);
+        reset(res.data);
+      } catch (error: any) {
+        if (error.response.status == 404) {
+          window.alert(`user of ID : ${id} cannot be found`);
+        }
+        console.error(error.message);
+      }
     };
-    reset(defaultValues);
 
     getUserDetails();
-    console.log("def", defaultValues);
-
-    console.log(defaultValues, "sw");
   }, [id]);
+
+  useEffect(() => {
+    setDefaultValues({
+      id: userData.id,
+      firstName: userData.firstName,
+      middleName: userData.middleName,
+      lastName: userData.lastName,
+      email: userData.email,
+      mobileNumber: userData.mobileNumber,
+      resAddress: userData.resAddress,
+      contractType: userData.contractType,
+      startYear: userData.startDate.split("-")[0],
+      startMonth: userData.startDate.split("-")[1],
+      startDay: userData.startDate.split("-")[2],
+      endYear: userData.endDate.split("-")[0],
+      endMonth: userData.endDate.split("-")[1],
+      endDay: userData.endDate.split("-")[2],
+      ongoing: userData.ongoing,
+      timeBasis: userData.timeBasis,
+      weeklyHours: userData.weeklyHours,
+    });
+    reset(defaultValues);
+  }, [userData]);
 
   const handleChange = (event: { target: { name: any; value: any } }) => {
     console.log(event.target.name, event.target.value);
@@ -129,8 +126,6 @@ const EmployeeDetails = () => {
       [event.target.name]: event.target.value,
     });
   };
-
-  console.log("userData", userData);
 
   const {
     register,
@@ -303,12 +298,12 @@ const EmployeeDetails = () => {
               <Controller
                 control={control}
                 name="startMonth"
-                render={({ field: { onChange, onBlur, value, ref } }) => (
+                render={(props) => (
                   <select
-                    defaultValue={dates.startMonth}
+                    value={props.field.value}
                     id="startMonth"
                     {...register("startMonth", { required: true })}
-                    onChange={handleChange}
+                    onChange={(e) => props.field.onChange(e.target.value)}
                   >
                     <option value="">Month</option>
                     <option value="01">January</option>

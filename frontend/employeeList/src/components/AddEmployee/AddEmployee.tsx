@@ -82,10 +82,15 @@ const AddEmployee = ({ userData }: any) => {
       weeklyHours: data.weeklyHours,
     };
 
-    axios.post("http://localhost:8080/employee", formattedForm).then((res) => {
-      console.log(res.data);
-      navigate("/");
-    });
+    axios
+      .post("http://localhost:8080/employee", formattedForm)
+      .then((res) => {
+        console.log(res.data);
+        navigate("/");
+      })
+      .catch((res) => {
+        window.alert(res.error);
+      });
   };
 
   return (
@@ -98,18 +103,21 @@ const AddEmployee = ({ userData }: any) => {
           <h3>Personal Information</h3>
 
           <label htmlFor="firstName">First Name</label>
-          <div className={Styles.AddEmployee_Form__Input}>
+          <div className={Styles.AddEmployee_Form__Input__Text}>
             <input
+              className={Styles.AddEmployee_Form__Input__Text}
               id="firstName"
               {...register("firstName", { required: true })}
               onChange={handleChange}
             />
           </div>
+
           {errors.firstName && <span>*First Name is required</span>}
 
           <label htmlFor="middleName">Middle Name (if applicable)</label>
           <div className={Styles.AddEmployee_Form__Input}>
             <input
+              className={Styles.AddEmployee_Form__Input__Text}
               id="middleName"
               {...register("middleName", { required: false })}
               onChange={handleChange}
@@ -119,6 +127,7 @@ const AddEmployee = ({ userData }: any) => {
           <label htmlFor="lastName">Last Name</label>
           <div className={Styles.AddEmployee_Form__Input}>
             <input
+              className={Styles.AddEmployee_Form__Input__Text}
               id="lastName"
               {...register("lastName", { required: true })}
               onChange={handleChange}
@@ -131,6 +140,7 @@ const AddEmployee = ({ userData }: any) => {
           <label htmlFor="email">Email</label>
           <div className={Styles.AddEmployee_Form__Input}>
             <input
+              className={Styles.AddEmployee_Form__Input__Text}
               id="email"
               {...register("email", {
                 required: true,
@@ -149,6 +159,7 @@ const AddEmployee = ({ userData }: any) => {
           <label htmlFor="mobileNumber">Mobile Number</label>
           <div className={Styles.AddEmployee_Form__Input}>
             <input
+              className={Styles.AddEmployee_Form__Input__Text}
               id="mobileNumber"
               {...register("mobileNumber", {
                 required: true,
@@ -166,6 +177,7 @@ const AddEmployee = ({ userData }: any) => {
           <label htmlFor="resAddress">Residential Address</label>
           <div className={Styles.AddEmployee_Form__Input}>
             <input
+              className={Styles.AddEmployee_Form__Input__Text}
               id="resAddress"
               {...register("resAddress", { required: true })}
               onChange={handleChange}
@@ -176,28 +188,30 @@ const AddEmployee = ({ userData }: any) => {
           <h3>Employee Status</h3>
 
           <label htmlFor="contractType">Contract Type</label>
-          <div className={Styles.AddEmployee_Form__Input__check}>
+          <div className={Styles.AddEmployee_Form__Input}>
             <div>
-              <input
-                id="contractType"
-                type="radio"
-                checked={formData && formData.contractType == "Permanent"}
-                value="Permanent"
-                {...register("contractType", { required: true })}
-                onChange={handleChange}
-              />
-              <label htmlFor="contractType">Permanent</label>
-            </div>
-            <div>
-              <input
-                id="contractType"
-                type="radio"
-                checked={formData && formData.contractType == "Contract"}
-                value="Contract"
-                {...register("contractType", { required: true })}
-                onChange={handleChange}
-              />
-              <label htmlFor="contractType">Contract</label>
+              <div>
+                <input
+                  id="contractType"
+                  type="radio"
+                  checked={formData && formData.contractType == "Permanent"}
+                  value="Permanent"
+                  {...register("contractType", { required: true })}
+                  onChange={handleChange}
+                />
+                <label htmlFor="contractType">Permanent</label>
+              </div>
+              <div>
+                <input
+                  id="contractType"
+                  type="radio"
+                  checked={formData && formData.contractType == "Contract"}
+                  value="Contract"
+                  {...register("contractType", { required: true })}
+                  onChange={handleChange}
+                />
+                <label htmlFor="contractType">Contract</label>
+              </div>
             </div>
           </div>
           {errors.contractType && <p>Contract Type is required</p>}
@@ -207,6 +221,7 @@ const AddEmployee = ({ userData }: any) => {
           <div className={Styles.AddEmployee_Form__Input}>
             <div className={Styles.AddEmployee_Form__Input__Date}>
               <input
+                className={Styles.AddEmployee_Form__Input__Day}
                 id="startDay"
                 type="number"
                 min="1"
@@ -216,6 +231,7 @@ const AddEmployee = ({ userData }: any) => {
                 onChange={handleChange}
               />
               <select
+                className={Styles.AddEmployee_Form__Input__Month}
                 id="startMonth"
                 {...register("startMonth", { required: true })}
                 onChange={handleChange}
@@ -258,6 +274,7 @@ const AddEmployee = ({ userData }: any) => {
           <div className={Styles.AddEmployee_Form__Input}>
             <div className={Styles.AddEmployee_Form__Input__Date}>
               <input
+                className={Styles.AddEmployee_Form__Input__Day}
                 id="endDay"
                 type="number"
                 min="1"
