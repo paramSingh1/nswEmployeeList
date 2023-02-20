@@ -4,6 +4,8 @@
 
 ![Landing Page](./assets/landing.png)
 
+# Mobile Landing Page
+
 ![Landing Page Mobile](./assets/mobile.png)
 
 # Required Software/Tech
