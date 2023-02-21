@@ -1,57 +1,24 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
+import { Employee } from "../../interfaces/Employee";
+import { rawFormData } from "../../interfaces/rawFormData";
 import Styles from "./AddEmployee.module.scss";
+import axios from "axios";
 
 const AddEmployee = ({ userData }: any) => {
   const navigate = useNavigate();
 
-  interface Employee {
-    firstName: string;
-    middleName: string;
-    lastName: string;
-    email: string;
-    mobileNumber: string;
-    resAddress: string;
-    contractType: string;
-    startDate: string;
-    endDate: string;
-    ongoing: boolean;
-    timeBasis: string;
-    weeklyHours: number;
-  }
-
   const [formData, setFormData] = useState<any>({});
 
   useEffect(() => {
-    userData && setFormData(userData);
+    userData && reset(userData);
   }, [userData]);
-
-  console.log(formData, "fd");
-
-  interface rawFormData {
-    firstName: string;
-    middleName: string;
-    lastName: string;
-    email: string;
-    mobileNumber: string;
-    resAddress: string;
-    contractType: string;
-    startDay: number;
-    startMonth: string;
-    startYear: number;
-    endDay: number;
-    endMonth: string;
-    endYear: number;
-    ongoing: boolean;
-    timeBasis: string;
-    weeklyHours: number;
-  }
 
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<rawFormData>({
     mode: "all",

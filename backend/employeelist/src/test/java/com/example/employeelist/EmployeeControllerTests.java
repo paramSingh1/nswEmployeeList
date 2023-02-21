@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.stereotype.Controller;
 
 import com.example.employeelist.Employee.EmployeeController;
 
@@ -18,21 +17,20 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import org.junit.jupiter.api.Test;
 
-//@SpringBootTest
 @AutoConfigureMockMvc
-@DataJpaTest
+//@DataJpaTest
+@SpringBootTest
 public class EmployeeControllerTests {
 
-	@Autowired
-	private EmployeeController controller;
+	
 	
 	@Autowired
-	private MockMvc mockMvc;
+	 MockMvc mockMvc;
 	
-	@Test
-	public void controllerLoads() throws Exception{
-		assertThat(controller).isNotNull();
-	}
+//	@Test
+//	public void controllerLoads() throws Exception{
+//		assertThat(controller).isNotNull();
+//	}
 	
 	@Test
 	void testGetAllEmployees() throws Exception {

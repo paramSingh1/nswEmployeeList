@@ -60,6 +60,9 @@ public class EmployeeDTO {
 		this.weeklyHours = weeklyHours;
 	}
 
+	public EmployeeDTO() {
+	}
+
 	// Getters and Setters.
 	public String getFirstName() {
 		return firstName;

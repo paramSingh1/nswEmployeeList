@@ -8,8 +8,6 @@ import styles from "./EmployeeList.module.scss";
 const EmployeeList = () => {
   const { isLoading, isError, data } = getEmployeeData();
 
-  console.log(isLoading);
-  console.log(isError, "ERR");
   return (
     <div>
       <div className={styles.EmployeeList_Header}>

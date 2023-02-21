@@ -3,46 +3,14 @@ import React, { useEffect, useState } from "react";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import Styles from "./EmployeeDetails.module.scss";
+import { rawFormDataForDetails } from "../../interfaces/rawFormData";
+import { EmployeeForDetails } from "../../interfaces/Employee";
 
 const EmployeeDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  interface Employee {
-    id: number;
-    firstName: string;
-    middleName: string;
-    lastName: string;
-    email: string;
-    mobileNumber: string;
-    resAddress: string;
-    contractType: string;
-    startDate: string;
-    endDate: string;
-    ongoing: boolean;
-    timeBasis: string;
-    weeklyHours: number;
-  }
-  interface rawFormData {
-    id: number;
-    firstName: string;
-    middleName: string;
-    lastName: string;
-    email: string;
-    mobileNumber: string;
-    resAddress: string;
-    contractType: string;
-    startDay: any;
-    startMonth: string;
-    startYear: any;
-    endDay: any;
-    endMonth: string;
-    endYear: any;
-    ongoing: boolean;
-    timeBasis: string;
-    weeklyHours: number;
-  }
-  const [userData, setUserData] = useState<Employee>({
+  const [userData, setUserData] = useState<EmployeeForDetails>({
     id: 0,
     firstName: "",
     middleName: "",
@@ -59,7 +27,7 @@ const EmployeeDetails = () => {
   });
   const [formData, setFormData] = useState({});
 
-  const [defaultValues, setDefaultValues] = useState<rawFormData>({
+  const [defaultValues, setDefaultValues] = useState<rawFormDataForDetails>({
     id: 0,
     firstName: "",
     middleName: "",
@@ -133,13 +101,13 @@ const EmployeeDetails = () => {
     reset,
     control,
     formState: { errors },
-  } = useForm<rawFormData>({
+  } = useForm<rawFormDataForDetails>({
     mode: "onChange",
     defaultValues,
   });
 
   const onSubmit: SubmitHandler<any> = async (data) => {
-    const formattedForm: Employee = {
+    const formattedForm: EmployeeForDetails = {
       id: data.id,
       firstName: data.firstName,
       middleName: data.middleName,

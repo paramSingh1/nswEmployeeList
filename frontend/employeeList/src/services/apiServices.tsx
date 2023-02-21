@@ -2,6 +2,7 @@ import { useQuery } from "react-query";
 import axios from "axios";
 import { QueryClientProvider } from "react-query";
 import { QueryClient } from "react-query";
+import { useNavigate } from "react-router-dom";
 
 export const queryClient = new QueryClient();
 export function getEmployeeData() {
