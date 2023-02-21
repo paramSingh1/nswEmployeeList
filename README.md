@@ -142,7 +142,9 @@ SELECT * FROM employee;
 
 - [React Router](https://reactrouter.com/en/main/start/tutorial)
 
-- [React Router](https://reactrouter.com/en/main/start/tutorial)
+- [Spring Exceptions](https://www.baeldung.com/spring-exceptions)
+
+- [Spring Testing](https://spring.io/guides/gs/testing-web/)
 
 ### Stay in touch
 

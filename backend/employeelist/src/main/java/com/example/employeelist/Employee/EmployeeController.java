@@ -34,49 +34,71 @@ public class EmployeeController {
 
 	@PostMapping
 	public ResponseEntity<Employee> addEmployee(@Valid @RequestBody EmployeeDTO data) {
-		Employee newEmployee = this.service.addEmployee(data);
-		logger.info("Successfully added new Employee");
-		return new ResponseEntity<>(newEmployee, HttpStatus.CREATED);
+		try {
+			Employee newEmployee = this.service.addEmployee(data);
+			logger.info("Successfully added new Employee");
+			return new ResponseEntity<>(newEmployee, HttpStatus.CREATED);
+		} catch (Exception e) {
+			logger.error("An error occured: Could not add new employee", e);
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 
 	@GetMapping
 	public ResponseEntity<List<Employee>> getAll() {
-		List<Employee> allEmployees = this.service.getAll();
-
-		logger.info("Successfully Returned all Employees");
-		return new ResponseEntity<>(allEmployees, HttpStatus.OK);
+		try {
+			List<Employee> allEmployees = this.service.getAll();
+			logger.info("Successfully Returned all Employees");
+			return new ResponseEntity<>(allEmployees, HttpStatus.OK);
+		} catch (Exception e) {
+			logger.error("An error occured: Could not add get employees", e);
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 
 	@GetMapping("/{id}")
 	public ResponseEntity<Employee> findById(@PathVariable Long id) {
-		Optional<Employee> maybeEmployee = this.service.getById(id);
+		try {
+			Optional<Employee> maybeEmployee = this.service.getById(id);
 
-		if (maybeEmployee.isEmpty()) {
-			logger.error("Error: Could not find Employee of ID: ", id);
-			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+			if (maybeEmployee.isEmpty()) {
+				logger.error("An error occured: Could not find Employee of ID: ", id);
+				return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+			}
+			logger.info("Successfully Returned Employee of ID: ", id);
+
+			return new ResponseEntity<>(maybeEmployee.get(), HttpStatus.OK);
+		} catch (Exception e) {
+			logger.error("An error occured: Could not get employee with ID: " + id, e);
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		logger.info("Successfully Returned Employee of ID: ", id);
-
-		return new ResponseEntity<>(maybeEmployee.get(), HttpStatus.OK);
 	}
 
 	@PutMapping("/{id}")
 	public ResponseEntity<Employee> updateEmployee(@Valid @PathVariable Long id, @RequestBody EmployeeDTO data) {
-		Employee toUpdate = this.service.updateEmployee(id, data);
-		return new ResponseEntity<>(toUpdate, HttpStatus.OK);
-
+		try {
+			Employee toUpdate = this.service.updateEmployee(id, data);
+			return new ResponseEntity<>(toUpdate, HttpStatus.OK);
+		} catch (Exception e) {
+			logger.error("An error occured: Could not update the employee with ID: " , id, e);
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Employee> deleteEmployee(@PathVariable Long id) {
-		boolean isDeleted = this.service.delete(id);
-		if (isDeleted) {
-			logger.info("Successfully Deleted Employee of ID: ", id);
-
-			return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+		try {
+			boolean isDeleted = this.service.delete(id);
+			if (isDeleted) {
+				logger.info("Successfully Deleted Employee of ID: ", id);
+				return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+			} else {
+				logger.error("Could not Deleted Employee of ID: ", id);
+				return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+			}
+		} catch (Exception e) {
+			logger.error("An error occured: Could not delete employee with ID: " + id, e);
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		logger.error("Could not Deleted Employee of ID: ", id);
-		return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
 	}
-
 }
