@@ -104,6 +104,15 @@ SELECT * FROM employee;
 
 - The Backend, Database and Frontend are now running !
 
+## Testing
+
+# Front End
+
+- Tests have been created for the Front end using `Vitest` and `React Testing Library`.
+- When in the frontend folder, simply run `npm run test`
+
+    <img src="./assets/test.png" width="400" />
+
 ## Reflection
 
 - Overall this tech test exposed me to many new technologies and it was overall satisfying to piece many different technologies together to create a seamless product. It is what i enjoy doing.
