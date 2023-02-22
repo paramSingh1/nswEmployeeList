@@ -1,0 +1,42 @@
+@import "../../scss/partials";
+.EmployeeList {
+  &_Header {
+    display: flex;
+    align-items: center;
+    height: 140px;
+    width: 100%;
+    background-color: $grey-light;
+    &_Text {
+      margin-left: 80px;
+      font-size: 1.5rem;
+    }
+  }
+
+  &_Info {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 2px solid $grey-med;
+    height: 100px;
+  }
+
+  &_Btn {
+    border: 1px solid black;
+    background-color: $blue;
+    padding: 10px 20px;
+    color: $grey-light;
+    border: none;
+    border-radius: 5px;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  &_Body {
+    padding: 10px 80px;
+    @media only screen and (max-width: 767px) {
+      padding: 2px;
+    }
+  }
+}
