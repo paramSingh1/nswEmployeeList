@@ -37,8 +37,8 @@
 - Errors are handled with their respective HTPP status request codes.
 
 ```java
-try {
-			LocalDate startDate = LocalDate.parse(data.getStartDate());
+	try {
+		LocalDate startDate = LocalDate.parse(data.getStartDate());
 	        LocalDate endDate = LocalDate.parse(data.getEndDate());
 
 	        if (endDate.isBefore(startDate)) {
