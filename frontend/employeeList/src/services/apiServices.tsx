@@ -49,6 +49,8 @@ export const getUserDetails = async (id: string) => {
     if (error.response.status == 404) {
       throw new Error(`User of ID : ${id} cannot be found`);
     }
+    console.log("no");
+
     throw new Error(error.message);
   }
 };

@@ -146,6 +146,8 @@ SELECT * FROM employee;
 
 - [Spring Testing](https://spring.io/guides/gs/testing-web/)
 
+- [HTTP status codes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status)
+
 ### Stay in touch
 
 - [LinkedIn](https://www.linkedin.com/in/paramsinghau/)

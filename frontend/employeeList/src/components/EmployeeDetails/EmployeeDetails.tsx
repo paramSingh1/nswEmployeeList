@@ -119,8 +119,12 @@ const EmployeeDetails = () => {
       timeBasis: data.timeBasis,
       weeklyHours: data.weeklyHours,
     };
-    await updateEmployee(data.id, formattedForm);
-    navigate("/");
+    try {
+      await updateEmployee(data.id, formattedForm);
+      navigate("/");
+    } catch (error: any) {
+      window.alert(` ${error.message} An error occured, Check your dates `);
+    }
   };
 
   return (
