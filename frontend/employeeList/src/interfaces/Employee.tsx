@@ -13,7 +13,7 @@ export interface Employee {
   weeklyHours: number;
 }
 
-export interface EmployeeForDetails {
+export interface EmployeeFormDetails {
   id: number;
   firstName: string;
   middleName: string;
@@ -27,4 +27,8 @@ export interface EmployeeForDetails {
   ongoing: boolean;
   timeBasis: string;
   weeklyHours: number;
+}
+
+export interface EmployeeListData {
+  employeeData: Employee[];
 }

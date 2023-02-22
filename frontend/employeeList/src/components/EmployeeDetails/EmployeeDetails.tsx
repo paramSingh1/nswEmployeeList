@@ -4,13 +4,14 @@ import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import Styles from "./EmployeeDetails.module.scss";
 import { rawFormDataForDetails } from "../../interfaces/rawFormData";
-import { EmployeeForDetails } from "../../interfaces/Employee";
+import { EmployeeFormDetails } from "../../interfaces/Employee";
+import { getUserDetails, updateEmployee } from "../../services/apiServices";
 
 const EmployeeDetails = () => {
-  const { id } = useParams();
+  const { id }: any = useParams();
   const navigate = useNavigate();
 
-  const [userData, setUserData] = useState<EmployeeForDetails>({
+  const [userData, setUserData] = useState<EmployeeFormDetails>({
     id: 0,
     firstName: "",
     middleName: "",
@@ -48,20 +49,16 @@ const EmployeeDetails = () => {
   });
 
   useEffect(() => {
-    const getUserDetails = async () => {
+    const fetchData = async () => {
       try {
-        const res = await axios.get(`http://localhost:8080/employee/${id}`);
-        setUserData(res.data);
-        reset(res.data);
+        const userData = await getUserDetails(id);
+        setUserData(userData);
+        reset(userData);
       } catch (error: any) {
-        if (error.response.status == 404) {
-          window.alert(`user of ID : ${id} cannot be found`);
-        }
-        console.error(error.message);
+        window.alert(error.message);
       }
     };
-
-    getUserDetails();
+    fetchData();
   }, [id]);
 
   useEffect(() => {
@@ -107,7 +104,7 @@ const EmployeeDetails = () => {
   });
 
   const onSubmit: SubmitHandler<any> = async (data) => {
-    const formattedForm: EmployeeForDetails = {
+    const formattedForm: EmployeeFormDetails = {
       id: data.id,
       firstName: data.firstName,
       middleName: data.middleName,
@@ -122,15 +119,8 @@ const EmployeeDetails = () => {
       timeBasis: data.timeBasis,
       weeklyHours: data.weeklyHours,
     };
-    await axios
-      .put(`http://localhost:8080/employee/${data.id}`, formattedForm)
-      .then((res) => {
-        console.log(res.data, "submitted data");
-        navigate("/");
-      });
-
-    console.log(data, "2323bwebfweifbwfbwh");
-    console.log(formattedForm, "swsw");
+    await updateEmployee(data.id, formattedForm);
+    navigate("/");
   };
 
   return (
@@ -278,6 +268,7 @@ const EmployeeDetails = () => {
             <div className={Styles.EmployeeDetails_Form__Input__Date}>
               <input
                 id="startDay"
+                data-testid="startDay"
                 type="number"
                 min="1"
                 max="31"
@@ -294,6 +285,7 @@ const EmployeeDetails = () => {
                   <select
                     value={props.field.value}
                     id="startMonth"
+                    data-testid="startMonth"
                     {...register("startMonth", { required: true })}
                     onChange={(e) => props.field.onChange(e.target.value)}
                   >
@@ -316,6 +308,7 @@ const EmployeeDetails = () => {
 
               <input
                 id="startYear"
+                data-testid="startYear"
                 type="number"
                 placeholder="YYYY"
                 {...register("startYear", {

@@ -25,37 +25,25 @@ const employee = {
 };
 
 describe("Employee Card", () => {
-  it("Should correctly Display the name", async () => {
+  beforeEach(() => {
     render(
       <QueryClientProvider client={queryClient}>
         <EmployeeCard employeeData={employee.employeeData} />
       </QueryClientProvider>,
       { wrapper: BrowserRouter }
     );
-
+  });
+  it("Should correctly Display the name", async () => {
     const employeeName = screen.getByText(/John Doe/i);
     expect(employeeName).toBeInTheDocument();
   });
 
   it("Should correctly display the email of the employee", async () => {
-    render(
-      <QueryClientProvider client={queryClient}>
-        <EmployeeCard employeeData={employee.employeeData} />
-      </QueryClientProvider>,
-      { wrapper: BrowserRouter }
-    );
-
     const employeeEmail = screen.getByText(/john.doe@example.com/i);
     expect(employeeEmail).toBeInTheDocument();
   });
 
   it("Should correctly delete an employee", async () => {
-    render(
-      <QueryClientProvider client={queryClient}>
-        <EmployeeCard employeeData={employee.employeeData} />
-      </QueryClientProvider>,
-      { wrapper: BrowserRouter }
-    );
     const removeBtn = screen.getByText(/john.doe@example.com/i);
     expect(removeBtn).toBeInTheDocument();
     const user = userEvent.setup();
@@ -63,13 +51,13 @@ describe("Employee Card", () => {
     expect(axios.delete).toBeCalled;
   });
 
+  it("should render an edit button", async () => {
+    const editButton = screen.getByText(/Edit/i);
+    console.log(editButton);
+    expect(editButton).toBeInTheDocument();
+  });
+
   it("should redirect to /details when edit is clicked", async () => {
-    render(
-      <QueryClientProvider client={queryClient}>
-        <EmployeeCard employeeData={employee.employeeData} />
-      </QueryClientProvider>,
-      { wrapper: BrowserRouter }
-    );
     const editButton = screen.getByText(/Edit/i);
     console.log(editButton);
     expect(editButton).toBeInTheDocument();

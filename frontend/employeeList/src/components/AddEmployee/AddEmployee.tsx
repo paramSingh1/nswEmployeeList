@@ -5,6 +5,7 @@ import { Employee } from "../../interfaces/Employee";
 import { rawFormData } from "../../interfaces/rawFormData";
 import Styles from "./AddEmployee.module.scss";
 import axios from "axios";
+import { addNewEmployee, createEmployee } from "../../services/apiServices";
 
 const AddEmployee = ({ userData }: any) => {
   const navigate = useNavigate();
@@ -34,29 +35,14 @@ const AddEmployee = ({ userData }: any) => {
   };
 
   const onSubmit: SubmitHandler<rawFormData> = (data) => {
-    const formattedForm: Employee = {
-      firstName: data.firstName,
-      middleName: data.middleName,
-      lastName: data.lastName,
-      email: data.email,
-      mobileNumber: data.mobileNumber,
-      resAddress: data.resAddress,
-      contractType: data.contractType,
-      startDate: `${data.startYear}-${data.startMonth}-${data.startDay}`,
-      endDate: `${data.endYear}-${data.endMonth}-${data.endDay}`,
-      ongoing: data.ongoing,
-      timeBasis: data.timeBasis,
-      weeklyHours: data.weeklyHours,
-    };
-
-    axios
-      .post("http://localhost:8080/employee", formattedForm)
+    createEmployee(data)
       .then((res) => {
         console.log(res.data);
         navigate("/");
       })
-      .catch((res) => {
-        window.alert(res.error);
+      .catch((error) => {
+        console.error(error);
+        window.alert(error.message);
       });
   };
 

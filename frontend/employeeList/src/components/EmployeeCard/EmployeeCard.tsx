@@ -1,14 +1,12 @@
-import axios from "axios";
-import React from "react";
 import { Link } from "react-router-dom";
-import { tenureInYears } from "../../Utils";
+import { deleteEmployee } from "../../services/apiServices";
+import { tenureInYears } from "../../services/Utils";
 import styles from "./EmployeeCard.module.scss";
 
 const EmployeeCard = (employee: any) => {
   const handleDelete = async () => {
-    await axios.delete(
-      `http://localhost:8080/employee/${employee.employeeData.id}`
-    );
+    await deleteEmployee(employee.employeeData.id);
+
     window.location.reload();
   };
   console.log(employee);

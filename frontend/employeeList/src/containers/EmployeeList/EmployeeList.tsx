@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import EmployeeCard from "../../components/EmployeeCard/EmployeeCard";
 import Header from "../../components/Header/Header";
+import { Employee } from "../../interfaces/Employee";
 import { getEmployeeData } from "../../services/apiServices";
 import styles from "./EmployeeList.module.scss";
 
 const EmployeeList = () => {
   const { isLoading, isError, data } = getEmployeeData();
-
+  console.log(data);
   return (
     <div>
       <div className={styles.EmployeeList_Header}>
@@ -23,7 +24,7 @@ const EmployeeList = () => {
           }
         </div>
         {data &&
-          data.map((employee: any, index: React.Key) => (
+          data.map((employee: Employee, index: React.Key) => (
             <EmployeeCard key={index} employeeData={employee} />
           ))}
       </div>
