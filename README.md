@@ -22,6 +22,31 @@
 
 # Description of project
 
+## Validation and Error handling
+
+- Frontend validation was achieved through the use of React Hook Form which displays errors as the user has input data.
+
+- Back end validation was achieved through decorators on the Entity and DTO layers.
+
+- Backend validations have also been included in the controller itself to ensure a final check. This is evident in the `addEmployee` controller, whereby dates are compared and checked to ensure the start date is not after the end date, vice versa.
+
+- Try Catch methods have been implemented throughout to catch errors.
+
+- A logging strategy has also been implemented to log such errors and exceptions.
+
+- Errors are handled with their respective HTPP status request codes.
+
+```java
+try {
+			LocalDate startDate = LocalDate.parse(data.getStartDate());
+	        LocalDate endDate = LocalDate.parse(data.getEndDate());
+
+	        if (endDate.isBefore(startDate)) {
+	            logger.error("An error occured: end date cannot be before start date");
+	            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+	        }
+```
+
 ## Database
 
 - SQL was used for the database as it allowed for easy integration with Spring through the Spring JPA.
@@ -115,24 +140,30 @@ SELECT * FROM employee;
 - Tests have been created for the Front end using `Vitest` and `React Testing Library`.
 - When in the frontend folder, simply run `npm run test`
 
-    <img src="./assets/test.png" width="400" />
+    <img src="./assets/testresults.png" width="400" />
 
 ## Reflection
 
 - Overall this tech test exposed me to many new technologies and it was overall satisfying to piece many different technologies together to create a seamless product. It is what i enjoy doing.
 
 - Most of the challenges i faced were surrounding testing. I had implemented many new libraries such as react hook form and useQuery.
+
+- When setting up Backend set up tests i ran into some dependency issues through the H2 memory database, which hindered my progress.
+
 - Mocking API calls is also something i did not have much exposure to prior to this project.
 
 - Through implementing, reading documentation i was able to learn a lot of new things, while also honing in on my existing skillset.
 
 - I found both frontend and backend to be fun, as both bring forth their own challenges.
 
-## Future Goals
+- Moving forward I will continue to use TDD to create well tested projects. I will need to attain a greater understanding of dependencies surrounding Spring boot testing. Time boxing and prioritizing requirements and my tasks helped me complete this project.
 
-- Add more refined validations
-- More robust error handling
-- More detailed testing for both front and backend.
+## Future Goals and Improvements
+
+- Implement global context such as Context
+- Add more refined validations for user experience.
+- Include more in depth API testing for REST endpoints on the front end
+- Include More detailed testing for spring backend
 
 ## Further reading or links to inspiration
 
