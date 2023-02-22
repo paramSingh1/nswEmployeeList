@@ -1,5 +1,6 @@
 package com.example.employeelist.Employee;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,7 +36,15 @@ public class EmployeeController {
 	@PostMapping
 	public ResponseEntity<Employee> addEmployee(@Valid @RequestBody EmployeeDTO data) {
 		try {
+			LocalDate startDate = LocalDate.parse(data.getStartDate());
+	        LocalDate endDate = LocalDate.parse(data.getEndDate());
+
+	        if (endDate.isBefore(startDate)) {
+	            logger.error("An error occured: end date cannot be before start date");
+	            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+	        }
 			Employee newEmployee = this.service.addEmployee(data);
+			
 			logger.info("Successfully added new Employee");
 			return new ResponseEntity<>(newEmployee, HttpStatus.CREATED);
 		} catch (Exception e) {
@@ -77,6 +86,14 @@ public class EmployeeController {
 	@PutMapping("/{id}")
 	public ResponseEntity<Employee> updateEmployee(@Valid @PathVariable Long id, @RequestBody EmployeeDTO data) {
 		try {
+			LocalDate startDate = LocalDate.parse(data.getStartDate());
+	        LocalDate endDate = LocalDate.parse(data.getEndDate());
+
+	        if (endDate.isBefore(startDate)) {
+	            logger.error("An error occured: end date cannot be before start date");
+	            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+	        }
+	        
 			Employee toUpdate = this.service.updateEmployee(id, data);
 			return new ResponseEntity<>(toUpdate, HttpStatus.OK);
 		} catch (Exception e) {
