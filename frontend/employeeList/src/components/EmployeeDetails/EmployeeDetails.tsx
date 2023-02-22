@@ -144,6 +144,7 @@ const EmployeeDetails = () => {
           <label htmlFor="firstName">First Name</label>
           <div className={Styles.EmployeeDetails_Form__Input}>
             <input
+              className={Styles.EmployeeDetails_Form__Input__Text}
               id="firstName"
               {...register("firstName", { required: true })}
               onChange={handleChange}
@@ -158,6 +159,7 @@ const EmployeeDetails = () => {
           <label htmlFor="middleName">Middle Name (if applicable)</label>
           <div className={Styles.EmployeeDetails_Form__Input}>
             <input
+              className={Styles.EmployeeDetails_Form__Input__Text}
               id="middleName"
               {...register("middleName", { required: false })}
               onChange={handleChange}
@@ -167,6 +169,7 @@ const EmployeeDetails = () => {
           <label htmlFor="lastName">Last Name</label>
           <div className={Styles.EmployeeDetails_Form__Input}>
             <input
+              className={Styles.EmployeeDetails_Form__Input__Text}
               id="lastName"
               {...register("lastName", { required: true })}
               onChange={handleChange}
@@ -184,6 +187,7 @@ const EmployeeDetails = () => {
           <div className={Styles.EmployeeDetails_Form__Input}>
             <input
               id="email"
+              className={Styles.EmployeeDetails_Form__Input__Text}
               {...register("email", {
                 required: true,
                 pattern: {
@@ -203,6 +207,7 @@ const EmployeeDetails = () => {
           <label htmlFor="mobileNumber">Mobile Number</label>
           <div className={Styles.EmployeeDetails_Form__Input}>
             <input
+              className={Styles.EmployeeDetails_Form__Input__Text}
               id="mobileNumber"
               {...register("mobileNumber", {
                 required: true,
@@ -224,6 +229,7 @@ const EmployeeDetails = () => {
           <label htmlFor="resAddress">Residential Address</label>
           <div className={Styles.EmployeeDetails_Form__Input}>
             <input
+              className={Styles.EmployeeDetails_Form__Input__Address}
               id="resAddress"
               {...register("resAddress", { required: true })}
               onChange={handleChange}
@@ -273,6 +279,7 @@ const EmployeeDetails = () => {
               <input
                 id="startDay"
                 data-testid="startDay"
+                className={Styles.EmployeeDetails_Form__Input__Day}
                 type="number"
                 min="1"
                 max="31"
@@ -288,6 +295,7 @@ const EmployeeDetails = () => {
                 render={(props) => (
                   <select
                     value={props.field.value}
+                    className={Styles.EmployeeDetails_Form__Input__Month}
                     id="startMonth"
                     data-testid="startMonth"
                     {...register("startMonth", { required: true })}
@@ -314,6 +322,7 @@ const EmployeeDetails = () => {
                 id="startYear"
                 data-testid="startYear"
                 type="number"
+                className={Styles.EmployeeDetails_Form__Input__Year}
                 placeholder="YYYY"
                 {...register("startYear", {
                   required: true,
@@ -345,6 +354,7 @@ const EmployeeDetails = () => {
           <div className={Styles.EmployeeDetails_Form__Input}>
             <div className={Styles.EmployeeDetails_Form__Input__Date}>
               <input
+                className={Styles.EmployeeDetails_Form__Input__Day}
                 id="endDay"
                 type="number"
                 min="1"
@@ -354,6 +364,7 @@ const EmployeeDetails = () => {
                 onChange={handleChange}
               />
               <select
+                className={Styles.EmployeeDetails_Form__Input__Month}
                 id="endMonth"
                 {...register("endMonth", { required: true })}
                 onChange={handleChange}
@@ -373,6 +384,7 @@ const EmployeeDetails = () => {
                 <option value="12">December</option>
               </select>
               <input
+                className={Styles.EmployeeDetails_Form__Input__Year}
                 id="endYear"
                 type="number"
                 placeholder="YYYY"
@@ -444,6 +456,7 @@ const EmployeeDetails = () => {
           <div className={Styles.EmployeeDetails_Form__Input}>
             <input
               id="weeklyHours"
+              className={Styles.EmployeeDetails_Form__Input__Hours}
               type="number"
               {...register("weeklyHours", { required: true })}
               onChange={handleChange}

@@ -32,6 +32,10 @@
     display: flex;
     flex-direction: column;
     width: 100%;
+    @media only screen and (max-width: 767px) {
+      width: 100vw;
+      padding: 10px;
+    }
 
     &__Input {
       width: 60%;

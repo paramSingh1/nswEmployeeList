@@ -8,6 +8,10 @@
 
 ![Landing Page Mobile](./assets/mobile.png)
 
+# Mobile Form page and validation errors
+
+![Landing Page Mobile](./assets/mobilevalidation.png)
+
 # Required Software/Tech
 
 1. MySQLWorkbench
@@ -152,6 +156,7 @@ SELECT * FROM employee;
 
 - [LinkedIn](https://www.linkedin.com/in/paramsinghau/)
 - [Github ](https://github.com/paramSingh1)
+- Email : paramdeep2009@hotmail.com
 
 ### Licence
 
