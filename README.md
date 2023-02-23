@@ -1,4 +1,4 @@
-# NSW DCP Employee List Full-Stack Project
+# Employee List Full-Stack Project
 
 # Landing Page
 
@@ -164,6 +164,9 @@ SELECT * FROM employee;
 - Add more refined validations for user experience.
 - Include more in depth API testing for REST endpoints on the front end
 - Include More detailed testing for spring backend
+- Add authentication system
+- Searchbar functionality
+- Pagination and sorting
 
 ## Further reading or links to inspiration
 
