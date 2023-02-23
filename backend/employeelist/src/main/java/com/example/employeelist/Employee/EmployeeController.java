@@ -35,7 +35,7 @@ public class EmployeeController {
 
 	@PostMapping
 	public ResponseEntity<Employee> addEmployee(@Valid @RequestBody EmployeeDTO data) {
-//		try {
+		try {
 //			LocalDate startDate = LocalDate.parse(data.getStartDate());
 //	        LocalDate endDate = LocalDate.parse(data.getEndDate());
 //
