@@ -1,10 +1,9 @@
 import { useQuery } from "react-query";
 import axios from "axios";
-import { QueryClientProvider } from "react-query";
 import { QueryClient } from "react-query";
-import { useNavigate } from "react-router-dom";
 import { Employee } from "../interfaces/Employee";
 import { rawFormData } from "../interfaces/rawFormData";
+import { formatDate } from "./Utils";
 
 export const queryClient = new QueryClient();
 export function getEmployeeData() {
@@ -38,7 +37,8 @@ export const createEmployee = (data: rawFormData) => {
     timeBasis: data.timeBasis,
     weeklyHours: data.weeklyHours,
   };
-
+  formattedForm.startDate = formatDate(formattedForm.startDate);
+  formattedForm.endDate = formatDate(formattedForm.endDate);
   return axios.post("http://localhost:8080/employee", formattedForm);
 };
 export const getUserDetails = async (id: string) => {
