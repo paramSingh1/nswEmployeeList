@@ -1,6 +1,7 @@
 package com.example.employeelist.Employee;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,13 +37,14 @@ public class EmployeeController {
 	@PostMapping
 	public ResponseEntity<Employee> addEmployee(@Valid @RequestBody EmployeeDTO data) {
 		try {
-//			LocalDate startDate = LocalDate.parse(data.getStartDate());
-//	        LocalDate endDate = LocalDate.parse(data.getEndDate());
-//
-//	        if (endDate.isBefore(startDate)) {
-//	            logger.error("An error occured: end date cannot be before start date");
-//	            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//	        }
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+			LocalDate startDate = LocalDate.parse(data.getStartDate(), formatter);
+			LocalDate endDate = LocalDate.parse(data.getEndDate(), formatter);
+
+	        if (endDate.isBefore(startDate)) {
+	            logger.error("An error occured: end date cannot be before start date");
+	            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+	        }
 			Employee newEmployee = this.service.addEmployee(data);
 			
 			logger.info("Successfully added new Employee");
